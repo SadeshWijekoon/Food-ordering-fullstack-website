@@ -1,21 +1,24 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { assets } from '../../assets/assets';
 import './Fooditem.css'
+import { Storecontext } from '../../context/storecontext';
 
 const Fooditem = ({id,name,price,description,image}) => {
 
-const [itemCount,setItemCount]= useState(0)
+
+const {cartItems,addToCart,removeCart}=useContext(Storecontext)
 
   return (
     <div className='food-item'>
        <div className="food-item-image-container">
          <img className='food-itam-image' src={image}/>
          {
-            !itemCount ? <img className='add'onClick={()=>setItemCount(pre=>pre+1)} src={assets.add_icon_white} alt=''/>
+            !cartItems[id] ? 
+            <img className='add'onClick={()=>addToCart(id)} src={assets.add_icon_white} alt=''/>
             :<div className='food-item-counter'>
-               <img onClick={()=>setItemCount(pre=>pre-1)} src={assets.remove_icon_red}/>
-               <p>{itemCount}</p>
-               <img onClick={()=>setItemCount(pre=>pre+1)} src={assets.add_icon_green}/>
+               <img onClick={()=>removeCart(id)} src={assets.remove_icon_red}/> {/* this 3 lines for the add and remove button in food-item-image */}
+               <p>{cartItems[id]}</p>
+               <img onClick={()=>addToCart(id)} src={assets.add_icon_green}/>
             </div>
          }
        </div>
