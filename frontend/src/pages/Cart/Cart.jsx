@@ -3,7 +3,7 @@ import './Cart.css';
 import { Storecontext } from '../../context/storecontext';
 
 const Cart = () => {
-  const { food_list, cartItems, setCartItems, addToCart, removeCart } = useContext(Storecontext);
+  const { food_list, cartItems,  removeCart } = useContext(Storecontext);
 
   return (
     <div className="cart">
@@ -22,19 +22,25 @@ const Cart = () => {
           const quantity = cartItems[item.id];
           if (quantity > 0) {
             return (
+              <>
               <div key={item.id} className="cart-items-title cart-items-item">
                 <img src={item.image}/>
                 <p>{item.name}</p>
-                <p>{item.price}</p>
+                <p>${item.price}</p>
                 <p>{cartItems[item.id]}</p> {/*show the amount*/}
                 <p>${item.price*cartItems[item.id]}</p>
-                <p>x</p>
+                <div className='cross'>
+                <p onClick={()=>removeCart(item.id)}>x</p>
+                </div>
               </div>
+              <hr/>
+              </>
             );
           }
           return null;
         })}
       </div>
+       <div></div>
     </div>
   );
 };
