@@ -11,6 +11,8 @@ const Storecontextprovider = (props)=>{
    const addToCart= (id)=>{
      if(!cartItems[id]){
         setCartItems((pre)=>({...pre,[id]:1}))
+        console.log(cartItems);
+        
      }else{
        setCartItems((pre)=>({...pre,[id]:pre[id]+1}))
      }
@@ -38,4 +40,4 @@ const Storecontextprovider = (props)=>{
 
 }
 
-export default Storecontextprovider;
+export default Storecontextprovider; // any compont that are covered with this is avalable acsess to the context value 
