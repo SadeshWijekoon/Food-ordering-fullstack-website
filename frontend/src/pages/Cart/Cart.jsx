@@ -1,9 +1,9 @@
-import { useContext } from 'react';
-import './Cart.css';
-import { Storecontext } from '../../context/storecontext';
+import { useContext } from "react";
+import "./Cart.css";
+import { Storecontext } from "../../context/storecontext";
 
 const Cart = () => {
-  const { food_list, cartItems,  removeCart } = useContext(Storecontext);
+  const { food_list, cartItems, removeCart,getTotalCartAmount } = useContext(Storecontext);
 
   return (
     <div className="cart">
@@ -18,29 +18,58 @@ const Cart = () => {
         </div>
         <br />
         <hr />
-        {food_list.map((item, index) => {
+        {food_list.map((item) => {
           const quantity = cartItems[item.id];
           if (quantity > 0) {
             return (
               <>
-              <div key={item.id} className="cart-items-title cart-items-item">
-                <img src={item.image}/>
-                <p>{item.name}</p>
-                <p>${item.price}</p>
-                <p>{cartItems[item.id]}</p> {/*show the amount*/}
-                <p>${item.price*cartItems[item.id]}</p>
-                <div className='cross'>
-                <p onClick={()=>removeCart(item.id)}>x</p>
+                <div key={item.id} className="cart-items-title cart-items-item">
+                  <img src={item.image} />
+                  <p>{item.name}</p>
+                  <p>${item.price}</p>
+                  <p>{cartItems[item.id]}</p> {/*show the amount*/}
+                  <p>${item.price * cartItems[item.id]}</p>
+                  <div className="cross">
+                    <p onClick={() => removeCart(item.id)}>x</p>
+                  </div>
                 </div>
-              </div>
-              <hr/>
+                <hr />
               </>
             );
           }
           return null;
         })}
       </div>
-       <div></div>
+      <div className="cart-bottom">
+        <div className="cart-total">
+          <h2>Cart Total</h2>
+          <div>
+            <div className="cart-tot-datail">
+              <p>Subtotal</p>
+              <p>${getTotalCartAmount()}</p>
+            </div>
+            <div className="cart-tot-datail">
+              <p>Delivary Fee</p>
+              <p>${2}</p>
+            </div>
+            <hr />
+            <div className="cart-tot-datail">
+              <b>Total</b>
+              <b>${getTotalCartAmount()+2}</b>
+            </div>
+          </div>
+          <button>PROCEED TO CHECKOUT</button>
+        </div>
+        <div className="cart-promo-code">
+          <div>
+            <p>If you have a promo code,Enter it to here</p>
+            <div className="cart-pro-co-input">
+              <input placeholder="Promocode" type="text" />
+              <button>Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
